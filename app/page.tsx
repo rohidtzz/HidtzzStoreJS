@@ -6,6 +6,7 @@ import Layouts from "../components/home/layout";
 import Description from "../components/home/Description";
 
 import axios from "axios";
+import { stat } from "fs";
 
 async function getData() {
 
@@ -15,17 +16,22 @@ async function getData() {
     if (res.status !== 200) {
       throw new Error('Network response was not ok');
     }
-    // console.log(res.cata);
+    // console.log(res.data);
     const data = await res.data;
+
     return data.data;
     
     
-  } catch (error:any) {
+  } catch (error: any) {
     
-    console.log(error);
-    if(error.code === 'ECONNREFUSED'){
-      return { message: 'Server not available' };
+    console.log(error.response.data);
+    if(error.response.status === 404){
+      return error.response.status+':'+error.response.statusText;
+    }else if(error.response.status === 403){
+      return error.response.status+':'+error.response.statusText;
     }
+
+    return false;
   }
   
 }
@@ -66,7 +72,7 @@ export default async function Home() {
 
           <div className="max-w max-w-sm ">
             <div className="px-6 py-4 ">
-              <div className="font-bold text-xl mb-2">{datas.message}</div>
+              <div className="font-bold text-xl mb-2">{datas}</div>
             </div>
           </div>
 
