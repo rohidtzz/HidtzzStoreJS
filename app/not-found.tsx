@@ -1,24 +1,25 @@
+"use client";
 // "use server";
-// import { useEffect } from 'react';
-// import { useRouter } from 'next/router';
-import { redirect } from 'next/navigation'
+import { useEffect } from 'react';
+import {  useRouter } from 'next/navigation'
 import Head from 'next/head';
 
 export default function NotFound() {
 
-    redirect('/');
+    // redirect('/');
+    const router = useRouter();
     // const router = useRouter();
 
-    // useEffect(() => {
-    //     // Pastikan useEffect hanya dijalankan di sisi klien
-    //     if (typeof window !== 'undefined') {
-    //         const redirectTimer = setTimeout(() => {
-    //             router.push('/');
-    //         }, 3000);
+    useEffect(() => {
+        // Pastikan useEffect hanya dijalankan di sisi klien
+        if (typeof window !== 'undefined') {
+            const redirectTimer = setTimeout(() => {
+                router.push('/');
+            }, 1000);
 
-    //         return () => clearTimeout(redirectTimer);
-    //     }
-    // }, [router]);
+            return () => clearTimeout(redirectTimer);
+        }
+    }, [router]);
 
     return (
         <>
