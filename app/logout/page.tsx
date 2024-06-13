@@ -1,12 +1,13 @@
 "use client"
-import { redirect } from "next/navigation";
-
+import { useRouter } from "next/navigation";
+import { destroyCookie } from 'nookies';
 
 export default function page() {
-
-    localStorage.removeItem('bb_mb_string')
-
-    redirect('/')
+    const router = useRouter()
+    // localStorage.removeItem('bb_mb_string')
+    destroyCookie(null, 'bb_mb_string');
+    router.push('/')
+    // redirect('/')
 
   return (
     <>

@@ -1,9 +1,10 @@
 "use client"
 import Navbar from '../../components/home/navbar'
 import BootomBar from '../../components/home/bootomBar'
-
+import { parseCookies } from 'nookies'
 export default function page() {
-
+    // const cookies = parseCookies()
+    // console.log(cookies )
   return (
     <>
         <Navbar/>

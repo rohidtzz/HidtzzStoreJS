@@ -5,7 +5,7 @@ import Footer from "../../components/home/footer";
 import BootomBar from "../../components/home/bootomBar";
 import { useState } from "react";
 import { useRouter } from 'next/navigation'
-
+import { setCookie } from 'nookies';
 
 
 export default function Home() {
@@ -54,11 +54,15 @@ export default function Home() {
         }
 
         if(result.success === true){
-            localStorage.setItem('bb_mb_string', result.token)
+            setCookie(null, 'bb_mb_string', result.token, {
+                maxAge: 30 * 24 * 60 * 60, // 30 hari
+                path: '/',
+            });
+            // localStorage.setItem('bb_mb_string', result.token)
             router.push('/')
         }
         
-        console.log(result)
+        // console.log(result)
         
     }
 

@@ -26,7 +26,7 @@ export default function Home() {
         })
         const result = await response.json()
         
-        console.log(result)
+        // console.log(result)
 
         if(result.success === true){
             localStorage.setItem('bb_mb_string', result.token)

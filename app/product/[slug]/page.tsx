@@ -46,7 +46,7 @@ export default function page() {
   return (
     <>
         <Layouts>
-            {/* {console.log(params)} */}
+            {/* {params)} */}
             {data ? (
                 <>
                     
