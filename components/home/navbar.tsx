@@ -16,7 +16,28 @@ return (
             </a>
             <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
 
+
                 <Link href={'/login'} className=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Get Started</Link>
+                {/* <button type="button"
+                            className="relative invisible sm:visible inline-flex items-center p-3 text-sm font-medium text-center text-white  ">
+                            <svg className="h-8 w-8 text-gray-500" width="24" height="24" viewBox="0 0 24 24"
+                                stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" />
+                                <circle cx="9" cy="19" r="2" />
+                                <circle cx="17" cy="19" r="2" />
+                                <path d="M3 3h2l2 12a3 3 0 0 0 3 2h7a3 3 0 0 0 3 -2l1 -7h-15.2" />
+                            </svg>
+
+                            <span className="sr-only">Notifications</span>
+                            <div
+                                className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-gray-500 bg-blue-200 border-2 border-white rounded-full -top-0 -end-1 dark:border-gray-900">
+
+                                2
+                                
+
+                            </div>
+                        </button> */}
                 
 
             </div>

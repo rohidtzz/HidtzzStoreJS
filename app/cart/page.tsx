@@ -1,13 +1,10 @@
 "use client"
-import Navbar from '../../components/home/navbar'
-import BootomBar from '../../components/home/bootomBar'
-import { parseCookies } from 'nookies'
+import Layouts from '../../components/home/layout'
 export default function page() {
-    // const cookies = parseCookies()
-    // console.log(cookies )
+    
   return (
-    <>
-        <Navbar/>
+    <Layouts>
+
         <div className="px-8 mb-24">
 
             <div className="container mx-auto mt-24">
@@ -105,7 +102,7 @@ export default function page() {
                 </div>
             </div>
         </div>
-        <BootomBar/>
-    </>
+    </Layouts>
+
   )
 }

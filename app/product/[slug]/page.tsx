@@ -4,43 +4,24 @@ import Image from "next/image";
 import Layouts from "../../../components/home/layout";
 import { useParams } from 'next/navigation'
 
-interface Product {
-    data: {
-        id: number;
-        name: string;
-        title: string;
-        slug: string;
-        description: string;
-        price: string;
-        thumbnail: string;
-        stock: string;
-        category_id: number;
-        created_at: string;
-        updated_at: string;
-    };
-    
+import axios from "axios";
+
+const fetchData = async (setData:any, params:any) => {
+    axios.get(`${process.env.NEXT_PUBLIC_URL_API}/product/${params.slug}`)
+    .then((response) => {
+        setData(response.data.data)
+    })
+    .catch((error) => {
+        console.log(error)
+    })     
 }
-  
 
 export default function page() {
-    const [data, setData] = useState<Product | null>(null)
+    
+    const [data, setData] = useState<any | null>(null);
     const params = useParams<{ slug: string}>()
     useEffect(() => {
-        const fetchData = async () => {
-          try{
-            const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/product/${params.slug}`)
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`)
-            }
-            const result = await response.json()
-            setData(result)
-            
-          }catch(error){
-            console.log(error)
-          }        
-        }
-            
-        fetchData()
+        fetchData(setData, params)
     }, [])
 
   return (
@@ -53,7 +34,7 @@ export default function page() {
                     <div className="px-10">
                         <div className="relative flex md:flex-row  mt-28 bg-clip-border rounded-xl bg-white text-gray-700 shadow-md w-full md:w-full flex-col">
                             <div className="relative justify-center w-full md:w-4/6 sm:w-full m-0 overflow-hidden text-gray-700 bg-white rounded-r-none bg-clip-border rounded-xl">
-                                <Image src={data.data.thumbnail} priority={true} width={500} height={500} alt="card-image" className="w-full"/>
+                                <Image src={data.thumbnail} priority={true} width={500} height={500} alt="card-image" className="w-full"/>
                             </div>
 
                             <div className="p-6">
@@ -100,7 +81,7 @@ export default function page() {
 
                                 <br/>
 
-                                <p className="block mb-8 font-sans text-base antialiased font-normal leading-relaxed text-gray-700" dangerouslySetInnerHTML={{ __html: data.data.description  }}></p>
+                                <p className="block mb-8 font-sans text-base antialiased font-normal leading-relaxed text-gray-700" dangerouslySetInnerHTML={{ __html: data.description  }}></p>
 
                                         
 

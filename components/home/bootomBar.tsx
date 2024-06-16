@@ -7,15 +7,17 @@ export default function bootomBar() {
         <div
             className="visible sm:invisible fixed z-50 w-full h-16 -translate-x-1/2 bg-white border border-gray-200 bottom-0 left-1/2 dark:bg-gray-700 dark:border-gray-600">
             <div className="grid h-full grid-cols-5 mx-auto">
-                <a href="{{route('home')}}"  type="button"
-                    className="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 dark:hover:bg-gray-800 group">
+                <Link className="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 dark:hover:bg-gray-800 group" href={'/'}>
+                    
                     <svg className="w-5 h-5 mb-1  text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-500"
                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                         <path
                             d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
                     </svg>
                     <span className="@if (request()->routeIs('home')) text-blue-500 dark:text-white @else @endif">Home</span>
-                </a>
+                
+                </Link>
+                
                 <button  type="button"
                     className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 ">
                     <svg className="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400  "
@@ -28,7 +30,7 @@ export default function bootomBar() {
                     <span >Wallet</span>
                 </button>
                 
-                <a href="{{route('transaction')}}" type="button"
+                <a  type="button"
                     className="inline-flex flex-col items-center justify-center px-5">
                     <svg className="h-6 w-6 text-gray-500 "  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <rect x="5" y="3" width="14" height="18" rx="2" />  <line x1="9" y1="7" x2="15" y2="7" />  <line x1="9" y1="11" x2="15" y2="11" />  <line x1="9" y1="15" x2="13" y2="15" /></svg>
                     <span className=" text-blue-500 dark:text-white ">Transaksi</span>
