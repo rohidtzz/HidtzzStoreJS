@@ -10,12 +10,23 @@ import axios from "axios";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/scrollbar';
-import { Autoplay,Scrollbar } from 'swiper/modules';
+import 'swiper/css/navigation';
+import { Navigation } from 'swiper/modules';
 
-const fetchData = async (setData:any) => {
+const fetchDataProduct = async (setDataProduct:any) => {
   axios.get(`${process.env.NEXT_PUBLIC_URL_API}/product`)
   .then((response) => {
-    setData(response.data.data)
+    setDataProduct(response.data.data)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+}
+
+const fetchDataCategory = async (setDataCategory:any) => {
+  axios.get(`${process.env.NEXT_PUBLIC_URL_API}/category/product`)
+  .then((response) => {
+    setDataCategory(response.data.data)
   })
   .catch((error) => {
     console.log(error)
@@ -24,15 +35,19 @@ const fetchData = async (setData:any) => {
 
 export default function Home() {
   
-  const [data, setData] = useState<any[] | null>(null)
-  
+  const [dataProduct, setDataProduct] = useState<any[] | null>(null)
+  const [dataCategory, setDataCategory] = useState<any[] | null>(null)
+  const sub = (e:any,id:any) => {
+    console.log(id)
+  }
   useEffect(() => {
-    fetchData(setData)  
+    fetchDataProduct(setDataProduct)  
+    fetchDataCategory(setDataCategory)
   }, [])
   
   return (
     <Layouts>
-      <div className=" bg-cover bg-center bg-no-repeat h-screen" style={{ backgroundImage: "url('/banner/banner-depan.png')" }}>
+      {/* <div className=" bg-cover bg-center bg-no-repeat h-screen" style={{ backgroundImage: "url('/banner/banner-depan.png')" }}>
 
         <div className=" h-full flex flex-col items-center justify-center text-center p-8">
           <h1 className="text-2xl md:text-6xl xl:text-6xl  font-extrabold text-black mb-6">Welcome to Our Website</h1>
@@ -42,10 +57,10 @@ export default function Home() {
           </a>
         </div>
         
-      </div>
+      </div> */}
 
-      <div className="mt-10 flex justify-center items-center">
-        <div className="w-full max-w-screen-lg">
+      {/* <div className="mt-16 flex justify-center items-center">
+        <div className="w-full max-w-screen-md">
           <Swiper
             spaceBetween={15}
             slidesPerView={1}
@@ -69,10 +84,10 @@ export default function Home() {
               },
             }}
           >
-            {data ? (
+            {dataProduct ? (
               <div className="flex justify-center">
-                {data.map((product) => (
-                  <SwiperSlide key={product.id}>
+                {dataProduct.map((product) => (
+                  <SwiperSlide key={`banner-${product.id}`}>
                     <div className="flex justify-center">
                       <Image src={"/banner/banner.png"} width={500} height={500} className="w-full h-full" alt="logo" />
                     </div>
@@ -90,7 +105,7 @@ export default function Home() {
             )}
           </Swiper>
         </div>
-      </div>
+      </div> */}
 
       <div className="flex justify-center mt-24 item-center">
 
@@ -98,63 +113,56 @@ export default function Home() {
 
       </div>
       
-      <div className="mt-10 flex justify-center items-center">
-        <div className="w-full max-w-xs md:max-w-4xl p-4 border-2 border-gray-300 rounded-xl bg-white">
-          <Swiper
-          
-            slidesPerView={2}
-            modules={[Scrollbar]}
-            scrollbar={{ draggable: true }}
-            breakpoints={{
-              640: {
-                
-                slidesPerView: 3,
-              },
-              768: {
-                slidesPerView: 3,
-                spaceBetween: 20,
-              },
-              1024: {
-                slidesPerView: 6,
-                spaceBetween: 20,
-              },
-            }}
-          >
+      <div className="mt-10 flex justify-center ">
+        <div className="w-100 max-w-xs md:max-w-2xl p-4 border-2 border-gray-300 rounded-xl bg-white">
+
+          <div className="grid grid-cols-6">
+            <div className="swiper-button-prev-unique flex items-center justify-start ">
+              <svg className="w-6 h-6 text-gray-800 hover:text-blue-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13"/>
+              </svg>
+            </div>
             
-            {data ? (
-              <>
-                {data.map((product) => (
-                  <SwiperSlide >
-                  <span className=" hover:text-opacity-60 text-black text-xl font-medium dark:bg-gray-700 dark:text-gray-300">
-                    Baju Pendek
-                  </span>
-                </SwiperSlide>
-                ))}
-              </>
-            ) : (
-              <></>
-            )}
-            <SwiperSlide >
-                  <button className=" hover:text-opacity-60 text-black text-xl font-medium dark:bg-gray-700 dark:text-gray-300">
-                    Baju Pendek
-                  </button>
-            </SwiperSlide>
-            <div style={{ marginBottom: "20px" }}></div>
+            <div className="col-start-2 col-span-4 text-center">
+              <Swiper
+                navigation={{
+                  nextEl: '.swiper-button-next-unique',
+                  prevEl: '.swiper-button-prev-unique'
+                }}
+                slidesPerView={1}
+                allowTouchMove= {false}
+                modules={[Navigation]}
+              >
+                {dataCategory ? (
+                  dataCategory.map((item) => (
+                    <SwiperSlide key={`category-${item.id}`}>
+                      <button onClick={(e) => sub(e, item.id)} className="focus:bg-blue-200 focus:text-blue-800 inline-block bg-gray-200 hover:bg-blue-200 text-black-600 hover:text-blue-800 text-md md:text-xl xl:text-xl font-medium px-3 py-1 rounded-full cursor-pointer dark:bg-gray-700 dark:text-gray-300">
+                        {item.name}
+                      </button>
+                    </SwiperSlide>
+                  ))
+                ) : (
+                  <></>
+                )}
+              </Swiper>
+            </div>
             
-            
-            
-          </Swiper>
+            <div className="swiper-button-next-unique flex items-center justify-end">
+              <svg className="w-6 h-6 text-gray-800 hover:text-blue-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1"/>
+              </svg>
+            </div>
+          </div>
+
         </div>
       </div>
       
       <div className="flex justify-center">
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 md:grid-cols-3 p-9 md:p-4 gap-10 md:gap-4">
-          {data ? (
-            <>
+          {dataProduct ? (
+            dataProduct.map((product:any) => (
             
-            {data.map((product:any) => (
-            
-            <div className="p-0 md:p-4 sm:p-2" key={ product.id }>
+            <div className="p-0 md:p-4 sm:p-2" key={`product-${product.id}`}>
               <div className="max-w max-w-sm rounded overflow-hidden shadow-xl md:mt-0 " >
 
                 <Link href={'/product/'+product.slug}>
@@ -162,21 +170,20 @@ export default function Home() {
                 </Link>
 
                 <div className="px-6 py-4">
-                  <div className="font-bold text-xl mb-2">{product.title}</div>
+                  <div className="font-bold text-xl mb-2">{product.name}</div>
                   <Description text={product.description} />
                 </div>
 
                 <div className="px-6 pt-4 pb-2">
                   <Link href="/category">
-                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#Baju</span>
+                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#{product.category.name}</span>
                   </Link>
                 </div>
                       
               </div>
 
             </div>
-            )) }
-            </>
+            )) 
           
           ) : (
             
