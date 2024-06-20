@@ -63,7 +63,7 @@ export default function Home() {
   
   const [dataProduct, setDataProduct] = useState<any[] | null>(null)
   const [dataCategory, setDataCategory] = useState<any[] | null>(null)
-  const [activeCategory, setActiveCategory] = useState<any | null>(null)
+  const [activeCategory, setActiveCategory] = useState<any | null>(0)
 
 
   useEffect(() => {
