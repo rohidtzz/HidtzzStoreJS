@@ -33,13 +33,39 @@ const fetchDataCategory = async (setDataCategory:any) => {
   })
 }
 
+const changeProduct = (e:any,id:any,setDataProduct:any,setActiveCategory:any) => {
+  e.preventDefault()
+  setActiveCategory(id)
+
+  axios.get(`${process.env.NEXT_PUBLIC_URL_API}/product`)
+  .then((response) => {
+    let data: any[] = []
+    response.data.data?.map((product:any) => {
+
+      if(id == 0) {
+        data.push(product)
+      }else{
+        if(product.category_id == id) {
+          data.push(product)
+        }
+      }
+    })
+    
+    setDataProduct(data)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+  
+}
+
 export default function Home() {
   
   const [dataProduct, setDataProduct] = useState<any[] | null>(null)
   const [dataCategory, setDataCategory] = useState<any[] | null>(null)
-  const sub = (e:any,id:any) => {
-    console.log(id)
-  }
+  const [activeCategory, setActiveCategory] = useState<any | null>(null)
+
+
   useEffect(() => {
     fetchDataProduct(setDataProduct)  
     fetchDataCategory(setDataCategory)
@@ -124,6 +150,7 @@ export default function Home() {
             </div>
             
             <div className="col-start-2 col-span-4 text-center">
+              
               <Swiper
                 navigation={{
                   nextEl: '.swiper-button-next-unique',
@@ -133,10 +160,18 @@ export default function Home() {
                 allowTouchMove= {false}
                 modules={[Navigation]}
               >
+                <>
+                <SwiperSlide key={`category-0`}>
+                      <button onClick={(e) => changeProduct(e, 0,setDataProduct, setActiveCategory)} className={`inline-block  hover:bg-blue-200 text-black-600 hover:text-blue-800 text-md md:text-xl xl:text-xl font-medium px-3 py-1 rounded-full cursor-pointer dark:bg-gray-700 dark:text-gray-300 ${activeCategory === 0 ? 'bg-blue-200 text-blue-800' : ''}`}>
+                        Semua Product
+                      </button>
+                </SwiperSlide>
+                </>
                 {dataCategory ? (
+                  
                   dataCategory.map((item) => (
                     <SwiperSlide key={`category-${item.id}`}>
-                      <button onClick={(e) => sub(e, item.id)} className="focus:bg-blue-200 focus:text-blue-800 inline-block bg-gray-200 hover:bg-blue-200 text-black-600 hover:text-blue-800 text-md md:text-xl xl:text-xl font-medium px-3 py-1 rounded-full cursor-pointer dark:bg-gray-700 dark:text-gray-300">
+                      <button onClick={(e) => changeProduct(e, item.id,setDataProduct, setActiveCategory)} className={`inline-block  hover:bg-blue-200 text-black-600 hover:text-blue-800 text-md md:text-xl xl:text-xl font-medium px-3 py-1 rounded-full cursor-pointer dark:bg-gray-700 dark:text-gray-300 ${activeCategory === item.id ? 'bg-blue-200 text-blue-800' : ''}`}>
                         {item.name}
                       </button>
                     </SwiperSlide>
